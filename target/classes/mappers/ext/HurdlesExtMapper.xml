@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.briuppts.mapper.ext.HurdlesExtMapper">
+    <resultMap id="hurdlesExt" type="com.briup.briuppts.entity.ext.HurdlesExtend"
+               extends="com.briup.briuppts.mapper.ManagerHurdlesMapper.BaseResultMap">
+        <association property="fenceHouse" resultMap="com.briup.briuppts.mapper.ManagerFenceHouseMapper.BaseResultMap"/>
+    </resultMap>
+
+    <select id="selectHurdlesExtendByCondition" resultMap="hurdlesExt">
+        select h_id, h_name, h_desc, h_max,
+               h_saved, h_time, h_enable, h_full, h_fence_id,
+               fh_id, fh_name, fh_desc, fh_time
+        from manager_hurdles h ,
+             manager_fence_house fh
+        where h.h_fence_id = fh.fh_id
+        <if test="hName != null">
+            and h_name like concat('%',#{fhName},'%')
+        </if>
+        <if test="hMax != null">
+            and h_max = #{hMax}
+        </if>
+        <if test="fhName != null">
+            and fh_name = #{fhName}
+        </if>
+        <if test="hEnable != null">
+            and h_enable = #{hEnable}
+        </if>
+        order by h_time desc
+    </select>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.briuppts.mapper.AnalysisMapper">
+    <select id="countDisease" resultType="com.briup.briuppts.vm.StringVM">
+        select d_name as name,count(*) as value
+        from disease_record , manager_disease
+        where dr_d_id =d_id
+        group by d_name,dr_d_id
+    </select>
+    <select id="countSales" resultType="java.lang.Integer">
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 1 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 2 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 3 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 4 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 5 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 6 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 7 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 8 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 9 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 10 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 11 and year(isr_deliver) = #{year}
+        union all
+        select count(*)
+        from issue_record
+        where month(isr_deliver) = 12 and year(isr_deliver) = #{year}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*)
+        from manager_fence_house
+        union all
+        select count(*)
+        from manager_hurdles
+        union all
+        select count(*)
+        from manager_animal
+        union all
+        select count(*)
+        from manager_freezer
+        union all
+        select count(*)
+        from base_account
+    </select>
+    <select id="weightCount" resultType="java.util.Map">
+        SELECT COUNT(a_weight <![CDATA[ <]]> 30 OR NULL)                                 as "30以下",
+               COUNT(a_weight <![CDATA[ >]]> 50 OR NULL)                                 as "50以上",
+               COUNT(a_weight <![CDATA[ >=]]> 30 AND a_weight <![CDATA[ <=]]> 50 OR NULL) as "30~50"
+        from manager_animal
+    </select>
+</mapper>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.briuppts.mapper.DiseaseRecordMapper">
+  <resultMap id="BaseResultMap" type="com.briup.briuppts.entity.DiseaseRecord">
+    <id column="dr_id" jdbcType="INTEGER" property="drId" />
+    <result column="dr_animal_id" jdbcType="VARCHAR" property="drAnimalId" />
+    <result column="dr_desc" jdbcType="VARCHAR" property="drDesc" />
+    <result column="dr_cure" jdbcType="VARCHAR" property="drCure" />
+    <result column="dr_time" jdbcType="TIMESTAMP" property="drTime" />
+    <result column="dr_status" jdbcType="VARCHAR" property="drStatus" />
+    <result column="dr_d_id" jdbcType="INTEGER" property="drDId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    dr_id, dr_animal_id, dr_desc, dr_cure, dr_time, dr_status, dr_d_id
+  </sql>
+  <select id="selectByExample" parameterType="com.briup.briuppts.entity.DiseaseRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from disease_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from disease_record
+    where dr_id = #{drId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from disease_record
+    where dr_id = #{drId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.briup.briuppts.entity.DiseaseRecordExample">
+    delete from disease_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="dr_id" keyProperty="drId" parameterType="com.briup.briuppts.entity.DiseaseRecord" useGeneratedKeys="true">
+    insert into disease_record (dr_animal_id, dr_desc, dr_cure, 
+      dr_time, dr_status, dr_d_id
+      )
+    values (#{drAnimalId,jdbcType=VARCHAR}, #{drDesc,jdbcType=VARCHAR}, #{drCure,jdbcType=VARCHAR}, 
+      #{drTime,jdbcType=TIMESTAMP}, #{drStatus,jdbcType=VARCHAR}, #{drDId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="dr_id" keyProperty="drId" parameterType="com.briup.briuppts.entity.DiseaseRecord" useGeneratedKeys="true">
+    insert into disease_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="drAnimalId != null">
+        dr_animal_id,
+      </if>
+      <if test="drDesc != null">
+        dr_desc,
+      </if>
+      <if test="drCure != null">
+        dr_cure,
+      </if>
+      <if test="drTime != null">
+        dr_time,
+      </if>
+      <if test="drStatus != null">
+        dr_status,
+      </if>
+      <if test="drDId != null">
+        dr_d_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="drAnimalId != null">
+        #{drAnimalId,jdbcType=VARCHAR},
+      </if>
+      <if test="drDesc != null">
+        #{drDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="drCure != null">
+        #{drCure,jdbcType=VARCHAR},
+      </if>
+      <if test="drTime != null">
+        #{drTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drStatus != null">
+        #{drStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="drDId != null">
+        #{drDId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.briup.briuppts.entity.DiseaseRecordExample" resultType="java.lang.Long">
+    select count(*) from disease_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update disease_record
+    <set>
+      <if test="record.drId != null">
+        dr_id = #{record.drId,jdbcType=INTEGER},
+      </if>
+      <if test="record.drAnimalId != null">
+        dr_animal_id = #{record.drAnimalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drDesc != null">
+        dr_desc = #{record.drDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drCure != null">
+        dr_cure = #{record.drCure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drTime != null">
+        dr_time = #{record.drTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.drStatus != null">
+        dr_status = #{record.drStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drDId != null">
+        dr_d_id = #{record.drDId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update disease_record
+    set dr_id = #{record.drId,jdbcType=INTEGER},
+      dr_animal_id = #{record.drAnimalId,jdbcType=VARCHAR},
+      dr_desc = #{record.drDesc,jdbcType=VARCHAR},
+      dr_cure = #{record.drCure,jdbcType=VARCHAR},
+      dr_time = #{record.drTime,jdbcType=TIMESTAMP},
+      dr_status = #{record.drStatus,jdbcType=VARCHAR},
+      dr_d_id = #{record.drDId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.briup.briuppts.entity.DiseaseRecord">
+    update disease_record
+    <set>
+      <if test="drAnimalId != null">
+        dr_animal_id = #{drAnimalId,jdbcType=VARCHAR},
+      </if>
+      <if test="drDesc != null">
+        dr_desc = #{drDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="drCure != null">
+        dr_cure = #{drCure,jdbcType=VARCHAR},
+      </if>
+      <if test="drTime != null">
+        dr_time = #{drTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drStatus != null">
+        dr_status = #{drStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="drDId != null">
+        dr_d_id = #{drDId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where dr_id = #{drId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.briup.briuppts.entity.DiseaseRecord">
+    update disease_record
+    set dr_animal_id = #{drAnimalId,jdbcType=VARCHAR},
+      dr_desc = #{drDesc,jdbcType=VARCHAR},
+      dr_cure = #{drCure,jdbcType=VARCHAR},
+      dr_time = #{drTime,jdbcType=TIMESTAMP},
+      dr_status = #{drStatus,jdbcType=VARCHAR},
+      dr_d_id = #{drDId,jdbcType=INTEGER}
+    where dr_id = #{drId,jdbcType=INTEGER}
+  </update>
+</mapper>

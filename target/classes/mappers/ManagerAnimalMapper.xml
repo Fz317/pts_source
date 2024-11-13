@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.briuppts.mapper.ManagerAnimalMapper">
+
+    <resultMap id="BaseResultMap" type="com.briup.briuppts.entity.ManagerAnimal">
+        <id property="aAnimalId" column="a_animal_id"/>
+        <result property="aGender" column="a_gender"/>
+        <result property="aHealthy" column="a_healthy"/>
+        <result property="aInoculate" column="a_inoculate"/>
+        <result property="aStatus" column="a_status"/>
+        <result property="aTime" column="a_time"/>
+        <result property="aWeight" column="a_weight"/>
+        <result property="aHurdlesId" column="a_hurdles_id"/>
+        <result property="aBatchId" column="a_batch_id"/>
+    </resultMap>
+    <resultMap id="animalExtend" type="com.briup.briuppts.entity.ext.AnimalExtend" extends="BaseResultMap">
+        <result property="hurdle" column="hName"/>
+        <result property="fenceHouse" column="fhName"/>
+        <association property="batch" resultMap="com.briup.briuppts.mapper.ManagerBatchMapper.BaseResultMap"/>
+    </resultMap>
+    <insert id="insert">
+        insert into manager_animal (a_animal_id, a_weight, a_gender, a_healthy, a_status, a_inoculate, a_time,
+                                    a_batch_id, a_hurdles_id)
+        values (#{aAnimalId},#{aWeight},#{aGender},#{aHealthy},#{aStatus},#{aInoculate},#{aTime},#{aBatchId},#{aHurdlesId})
+    </insert>
+    <update id="updateByPrimarySelective">
+        update manager_animal
+        <set>
+            <if test="aWeight != null">
+                a_weight = #{aWeight},
+            </if>
+            <if test="aGender!=null">
+                a_gender = #{aGender},
+            </if>
+            <if test="aHealthy!=null">
+                a_healthy=#{aHealthy},
+            </if>
+            <if test="aStatus != null">
+                a_status = #{aStatus},
+            </if>
+            <if test="aInoculate!=null">
+                a_inoculate = #{aInoculate},
+            </if>
+            <if test="aTime!=null">
+                a_time = #{aTime},
+            </if>
+            <if test="aBatchId!=null">
+                a_batch_id = #{aBatchId},
+            </if>
+            <if test="aHurdlesId">
+                a_hurdles_id = #{aHurdlesId},
+            </if>
+        </set>
+        where a_animal_id = #{aAnimalId}
+    </update>
+    <update id="updateByPrimary">
+        update manager_animal
+        set a_healthy = #{healthy}
+        where a_animal_id = #{animalId}
+    </update>
+    <delete id="deleteByAAnimalId">
+        delete
+        from manager_animal
+        where a_animal_id = #{id}
+    </delete>
+
+    <select id="selectAll" resultMap="animalExtend">
+        select a_animal_id, a_weight, a_gender,
+               a_healthy, a_status, a_inoculate, a_time, a_batch_id, a_hurdles_id,
+               h.h_name as hName, fh.fh_name as fhName,
+               b_serial_id, b_desc, b_quarantine, b_qualified, b_time
+        from manager_animal a ,
+             manager_hurdles h,
+             manager_fence_house fh,
+             manager_batch b
+        where a.a_batch_id = b.b_serial_id
+        and a.a_hurdles_id = h.h_id
+        and h.h_fence_id = fh.fh_id
+        <if test="aHealthy != null">
+            and a_healthy = #{aHealthy}
+        </if>
+        <if test="aGender != null">
+            and a_gender = #{aGender}
+        </if>
+    </select>
+    <select id="selectByAAnimalId" resultMap="BaseResultMap">
+        select a_animal_id, a_weight, a_gender,
+               a_healthy, a_status, a_inoculate, a_time,
+               a_batch_id, a_hurdles_id
+        from manager_animal
+        where a_animal_id = #{animalId}
+    </select>
+</mapper>

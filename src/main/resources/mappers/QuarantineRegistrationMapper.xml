@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.briuppts.mapper.QuarantineRegistrationMapper">
+  <resultMap id="BaseResultMap" type="com.briup.briuppts.entity.QuarantineRegistration">
+    <id column="gr_id" jdbcType="INTEGER" property="grId" />
+    <result column="gr_time" jdbcType="VARCHAR" property="grTime" />
+    <result column="gr_img" jdbcType="VARCHAR" property="grImg" />
+    <result column="gr_mechanism" jdbcType="VARCHAR" property="grMechanism" />
+    <result column="gr_batch_id" jdbcType="VARCHAR" property="grBatchId" />
+    <result column="b_qualified" jdbcType="VARCHAR" property="bQualified" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    gr_id, gr_time, gr_img, gr_mechanism, gr_batch_id, b_qualified
+  </sql>
+  <select id="selectByExample" parameterType="com.briup.briuppts.entity.QuarantineRegistrationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from quarantine_registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from quarantine_registration
+    where gr_id = #{grId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from quarantine_registration
+    where gr_id = #{grId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.briup.briuppts.entity.QuarantineRegistrationExample">
+    delete from quarantine_registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="gr_id" keyProperty="grId" parameterType="com.briup.briuppts.entity.QuarantineRegistration" useGeneratedKeys="true">
+    insert into quarantine_registration (gr_time, gr_img, gr_mechanism, 
+      gr_batch_id, b_qualified)
+    values (#{grTime,jdbcType=VARCHAR}, #{grImg,jdbcType=VARCHAR}, #{grMechanism,jdbcType=VARCHAR}, 
+      #{grBatchId,jdbcType=VARCHAR}, #{bQualified,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="gr_id" keyProperty="grId" parameterType="com.briup.briuppts.entity.QuarantineRegistration" useGeneratedKeys="true">
+    insert into quarantine_registration
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="grTime != null">
+        gr_time,
+      </if>
+      <if test="grImg != null">
+        gr_img,
+      </if>
+      <if test="grMechanism != null">
+        gr_mechanism,
+      </if>
+      <if test="grBatchId != null">
+        gr_batch_id,
+      </if>
+      <if test="bQualified != null">
+        b_qualified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="grTime != null">
+        #{grTime,jdbcType=VARCHAR},
+      </if>
+      <if test="grImg != null">
+        #{grImg,jdbcType=VARCHAR},
+      </if>
+      <if test="grMechanism != null">
+        #{grMechanism,jdbcType=VARCHAR},
+      </if>
+      <if test="grBatchId != null">
+        #{grBatchId,jdbcType=VARCHAR},
+      </if>
+      <if test="bQualified != null">
+        #{bQualified,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.briup.briuppts.entity.QuarantineRegistrationExample" resultType="java.lang.Long">
+    select count(*) from quarantine_registration
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update quarantine_registration
+    <set>
+      <if test="record.grId != null">
+        gr_id = #{record.grId,jdbcType=INTEGER},
+      </if>
+      <if test="record.grTime != null">
+        gr_time = #{record.grTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grImg != null">
+        gr_img = #{record.grImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grMechanism != null">
+        gr_mechanism = #{record.grMechanism,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grBatchId != null">
+        gr_batch_id = #{record.grBatchId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bQualified != null">
+        b_qualified = #{record.bQualified,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update quarantine_registration
+    set gr_id = #{record.grId,jdbcType=INTEGER},
+      gr_time = #{record.grTime,jdbcType=VARCHAR},
+      gr_img = #{record.grImg,jdbcType=VARCHAR},
+      gr_mechanism = #{record.grMechanism,jdbcType=VARCHAR},
+      gr_batch_id = #{record.grBatchId,jdbcType=VARCHAR},
+      b_qualified = #{record.bQualified,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.briup.briuppts.entity.QuarantineRegistration">
+    update quarantine_registration
+    <set>
+      <if test="grTime != null">
+        gr_time = #{grTime,jdbcType=VARCHAR},
+      </if>
+      <if test="grImg != null">
+        gr_img = #{grImg,jdbcType=VARCHAR},
+      </if>
+      <if test="grMechanism != null">
+        gr_mechanism = #{grMechanism,jdbcType=VARCHAR},
+      </if>
+      <if test="grBatchId != null">
+        gr_batch_id = #{grBatchId,jdbcType=VARCHAR},
+      </if>
+      <if test="bQualified != null">
+        b_qualified = #{bQualified,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gr_id = #{grId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.briup.briuppts.entity.QuarantineRegistration">
+    update quarantine_registration
+    set gr_time = #{grTime,jdbcType=VARCHAR},
+      gr_img = #{grImg,jdbcType=VARCHAR},
+      gr_mechanism = #{grMechanism,jdbcType=VARCHAR},
+      gr_batch_id = #{grBatchId,jdbcType=VARCHAR},
+      b_qualified = #{bQualified,jdbcType=VARCHAR}
+    where gr_id = #{grId,jdbcType=INTEGER}
+  </update>
+</mapper>

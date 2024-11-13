@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.briuppts.mapper.ManagerHurdlesMapper">
+  <resultMap id="BaseResultMap" type="com.briup.briuppts.entity.ManagerHurdles">
+    <id column="h_id" jdbcType="VARCHAR" property="hId" />
+    <result column="h_name" jdbcType="VARCHAR" property="hName" />
+    <result column="h_desc" jdbcType="VARCHAR" property="hDesc" />
+    <result column="h_max" jdbcType="INTEGER" property="hMax" />
+    <result column="h_saved" jdbcType="INTEGER" property="hSaved" />
+    <result column="h_time" jdbcType="TIMESTAMP" property="hTime" />
+    <result column="h_enable" jdbcType="VARCHAR" property="hEnable" />
+    <result column="h_full" jdbcType="VARCHAR" property="hFull" />
+    <result column="h_fence_id" jdbcType="VARCHAR" property="hFenceId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    h_id, h_name, h_desc, h_max, h_saved, h_time, h_enable, h_full, h_fence_id
+  </sql>
+  <select id="selectByExample" parameterType="com.briup.briuppts.entity.ManagerHurdlesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from manager_hurdles
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from manager_hurdles
+    where h_id = #{hId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from manager_hurdles
+    where h_id = #{hId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.briup.briuppts.entity.ManagerHurdlesExample">
+    delete from manager_hurdles
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="h_id" keyProperty="hId" parameterType="com.briup.briuppts.entity.ManagerHurdles" useGeneratedKeys="true">
+    insert into manager_hurdles (h_name, h_desc, h_max, 
+      h_saved, h_time, h_enable, 
+      h_full, h_fence_id)
+    values (#{hName,jdbcType=VARCHAR}, #{hDesc,jdbcType=VARCHAR}, #{hMax,jdbcType=INTEGER}, 
+      #{hSaved,jdbcType=INTEGER}, #{hTime,jdbcType=TIMESTAMP}, #{hEnable,jdbcType=VARCHAR}, 
+      #{hFull,jdbcType=VARCHAR}, #{hFenceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="h_id" keyProperty="hId" parameterType="com.briup.briuppts.entity.ManagerHurdles" useGeneratedKeys="true">
+    insert into manager_hurdles
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hName != null">
+        h_name,
+      </if>
+      <if test="hDesc != null">
+        h_desc,
+      </if>
+      <if test="hMax != null">
+        h_max,
+      </if>
+      <if test="hSaved != null">
+        h_saved,
+      </if>
+      <if test="hTime != null">
+        h_time,
+      </if>
+      <if test="hEnable != null">
+        h_enable,
+      </if>
+      <if test="hFull != null">
+        h_full,
+      </if>
+      <if test="hFenceId != null">
+        h_fence_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hName != null">
+        #{hName,jdbcType=VARCHAR},
+      </if>
+      <if test="hDesc != null">
+        #{hDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="hMax != null">
+        #{hMax,jdbcType=INTEGER},
+      </if>
+      <if test="hSaved != null">
+        #{hSaved,jdbcType=INTEGER},
+      </if>
+      <if test="hTime != null">
+        #{hTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hEnable != null">
+        #{hEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="hFull != null">
+        #{hFull,jdbcType=VARCHAR},
+      </if>
+      <if test="hFenceId != null">
+        #{hFenceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.briup.briuppts.entity.ManagerHurdlesExample" resultType="java.lang.Long">
+    select count(*) from manager_hurdles
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update manager_hurdles
+    <set>
+      <if test="record.hId != null">
+        h_id = #{record.hId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hName != null">
+        h_name = #{record.hName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hDesc != null">
+        h_desc = #{record.hDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hMax != null">
+        h_max = #{record.hMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.hSaved != null">
+        h_saved = #{record.hSaved,jdbcType=INTEGER},
+      </if>
+      <if test="record.hTime != null">
+        h_time = #{record.hTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.hEnable != null">
+        h_enable = #{record.hEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hFull != null">
+        h_full = #{record.hFull,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hFenceId != null">
+        h_fence_id = #{record.hFenceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update manager_hurdles
+    set h_id = #{record.hId,jdbcType=VARCHAR},
+      h_name = #{record.hName,jdbcType=VARCHAR},
+      h_desc = #{record.hDesc,jdbcType=VARCHAR},
+      h_max = #{record.hMax,jdbcType=INTEGER},
+      h_saved = #{record.hSaved,jdbcType=INTEGER},
+      h_time = #{record.hTime,jdbcType=TIMESTAMP},
+      h_enable = #{record.hEnable,jdbcType=VARCHAR},
+      h_full = #{record.hFull,jdbcType=VARCHAR},
+      h_fence_id = #{record.hFenceId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.briup.briuppts.entity.ManagerHurdles">
+    update manager_hurdles
+    <set>
+      <if test="hName != null">
+        h_name = #{hName,jdbcType=VARCHAR},
+      </if>
+      <if test="hDesc != null">
+        h_desc = #{hDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="hMax != null">
+        h_max = #{hMax,jdbcType=INTEGER},
+      </if>
+      <if test="hSaved != null">
+        h_saved = #{hSaved,jdbcType=INTEGER},
+      </if>
+      <if test="hTime != null">
+        h_time = #{hTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hEnable != null">
+        h_enable = #{hEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="hFull != null">
+        h_full = #{hFull,jdbcType=VARCHAR},
+      </if>
+      <if test="hFenceId != null">
+        h_fence_id = #{hFenceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where h_id = #{hId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.briup.briuppts.entity.ManagerHurdles">
+    update manager_hurdles
+    set h_name = #{hName,jdbcType=VARCHAR},
+      h_desc = #{hDesc,jdbcType=VARCHAR},
+      h_max = #{hMax,jdbcType=INTEGER},
+      h_saved = #{hSaved,jdbcType=INTEGER},
+      h_time = #{hTime,jdbcType=TIMESTAMP},
+      h_enable = #{hEnable,jdbcType=VARCHAR},
+      h_full = #{hFull,jdbcType=VARCHAR},
+      h_fence_id = #{hFenceId,jdbcType=VARCHAR}
+    where h_id = #{hId,jdbcType=VARCHAR}
+  </update>
+</mapper>

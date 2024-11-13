@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.briuppts.mapper.ManagerFenceHouseMapper">
+  <resultMap id="BaseResultMap" type="com.briup.briuppts.entity.ManagerFenceHouse">
+    <id column="fh_id" jdbcType="VARCHAR" property="fhId" />
+    <result column="fh_name" jdbcType="VARCHAR" property="fhName" />
+    <result column="fh_desc" jdbcType="VARCHAR" property="fhDesc" />
+    <result column="fh_time" jdbcType="TIMESTAMP" property="fhTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    fh_id, fh_name, fh_desc, fh_time
+  </sql>
+  <insert id="myinsert" parameterType="com.briup.briuppts.entity.ManagerFenceHouse">
+    insert into manager_fence_house(fh_id, fh_name, fh_desc,fh_time)
+    values(#{fhId}, #{fhName}, #{fhDesc},#{fhTime})
+  </insert>
+  <select id="selectByExample" parameterType="com.briup.briuppts.entity.ManagerFenceHouseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from manager_fence_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from manager_fence_house
+    where fh_id = #{fhId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from manager_fence_house
+    where fh_id = #{fhId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.briup.briuppts.entity.ManagerFenceHouseExample">
+    delete from manager_fence_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="fh_id" keyProperty="fhId" parameterType="com.briup.briuppts.entity.ManagerFenceHouse" useGeneratedKeys="true">
+    insert into manager_fence_house (fh_name, fh_desc, fh_time
+      )
+    values (#{fhName,jdbcType=VARCHAR}, #{fhDesc,jdbcType=VARCHAR}, #{fhTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="fh_id" keyProperty="fhId" parameterType="com.briup.briuppts.entity.ManagerFenceHouse" useGeneratedKeys="true">
+    insert into manager_fence_house
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fhName != null">
+        fh_name,
+      </if>
+      <if test="fhDesc != null">
+        fh_desc,
+      </if>
+      <if test="fhTime != null">
+        fh_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fhName != null">
+        #{fhName,jdbcType=VARCHAR},
+      </if>
+      <if test="fhDesc != null">
+        #{fhDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="fhTime != null">
+        #{fhTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.briup.briuppts.entity.ManagerFenceHouseExample" resultType="java.lang.Long">
+    select count(*) from manager_fence_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update manager_fence_house
+    <set>
+      <if test="record.fhId != null">
+        fh_id = #{record.fhId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fhName != null">
+        fh_name = #{record.fhName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fhDesc != null">
+        fh_desc = #{record.fhDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fhTime != null">
+        fh_time = #{record.fhTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update manager_fence_house
+    set fh_id = #{record.fhId,jdbcType=VARCHAR},
+      fh_name = #{record.fhName,jdbcType=VARCHAR},
+      fh_desc = #{record.fhDesc,jdbcType=VARCHAR},
+      fh_time = #{record.fhTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.briup.briuppts.entity.ManagerFenceHouse">
+    update manager_fence_house
+    <set>
+      <if test="fhName != null">
+        fh_name = #{fhName,jdbcType=VARCHAR},
+      </if>
+      <if test="fhDesc != null">
+        fh_desc = #{fhDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="fhTime != null">
+        fh_time = #{fhTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where fh_id = #{fhId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.briup.briuppts.entity.ManagerFenceHouse">
+    update manager_fence_house
+    set fh_name = #{fhName,jdbcType=VARCHAR},
+      fh_desc = #{fhDesc,jdbcType=VARCHAR},
+      fh_time = #{fhTime,jdbcType=TIMESTAMP}
+    where fh_id = #{fhId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.briuppts.mapper.ext.FenceHouseExtendMapper">
+<resultMap id="fenceHouseExtend" type="com.briup.briuppts.entity.ext.FenceHouseExtend" extends="com.briup.briuppts.mapper.ManagerFenceHouseMapper.BaseResultMap">
+    <collection property="managerHurdles" resultMap="com.briup.briuppts.mapper.ManagerHurdlesMapper.BaseResultMap"></collection>
+</resultMap>
+    <select id="selectById" resultMap="fenceHouseExtend">
+        select fh_id, fh_name, fh_desc, fh_time, h_id, h_name, h_desc, h_max, h_saved, h_time, h_enable, h_full, h_fence_id,fh_id, fh_name, fh_desc, fh_time, h_id, h_name, h_desc, h_max, h_saved, h_time, h_enable, h_full, h_fence_id
+        from manager_fence_house mf left join manager_hurdles mh
+        on mf.fh_id = mh.h_fence_id
+        where fh_id = #{id}
+    </select>
+</mapper>
